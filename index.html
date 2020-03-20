@@ -30,6 +30,7 @@
             margin-top: 8px;
             margin-left: 5px;
             margin-right: 5px;
+            float: left;
             position: relative;
         }
         
@@ -44,12 +45,12 @@
         <legend>网页换肤</legend>
         <div id="color">
             <ul>
-                <li id="1" style="background-color: lightcoral;"></li>
-                <li id="2" style="background-color: skyblue;"></li>
-                <li id="3" style="background-color: lightgoldenrodyellow;"></li>
-                <li id="4" style="background-color: lightslategray;"></li>
-                <li id="5" style="background-color: lightgreen;"></li>
-                <li id="6" style="background-color: khaki;"></li>
+                <li id="aaa1" style="background-color: lightcoral;"></li>
+                <li id="aaa2" style="background-color: skyblue;"></li>
+                <li id="aaa3" style="background-color: lightgoldenrodyellow;"></li>
+                <li id="aaa4" style="background-color: lightslategray;"></li>
+                <li id="aaa5" style="background-color: lightgreen;"></li>
+                <li id="aaa6" style="background-color: khaki;"></li>
             </ul>
         </div>
         <div id="p">
@@ -63,14 +64,15 @@
     var color = document.getElementsByTagName("li"); //色块数组
     var p = document.getElementById("p"); //皮肤
     var a, b; //用于存储的皮肤颜色和色块
-    window.onload = function() { //令皮肤颜色为存储的颜色
-        if (!localStorage.getItem("data")) {
+    window.onload = function() {
+        if (!(localStorage.getItem("data") && localStorage.getItem("select"))) { //令皮肤为默认的颜色
             p.style.backgroundColor = color[0].style.backgroundColor;
             color[0].style.marginTop = '5px';
-        } else {
+        } else { //令皮肤颜色为存储的颜色
             a = localStorage.getItem("data");
             p.style.backgroundColor = a;
             b = localStorage.getItem("select");
+            console.log(document.getElementById(b));
             document.getElementById(b).style.marginTop = '5px';
         }
     }
@@ -83,9 +85,11 @@
                 //其他色块恢复原位置
                 color[j].style.marginTop = '8px';
             }
+            console.log(this.style.marginTop);
             this.style.marginTop = '5px'; //点击的色块向上动3px
-            localStorage.setItem("data", this.style.backgroundColor); //存储点击色块位置
-            localStorage.setItem("select", this.id);
+
+            localStorage.setItem("data", this.style.backgroundColor); //存储点击颜色
+            localStorage.setItem("select", this.id); //存储点击色块
         }
     }
 </script>
