@@ -44,12 +44,12 @@
         <legend>网页换肤</legend>
         <div id="color">
             <ul>
-                <li style="background-color: lightcoral;"></li>
-                <li style="background-color: skyblue;"></li>
-                <li style="background-color: lightgoldenrodyellow;"></li>
-                <li style="background-color: lightslategray;"></li>
-                <li style="background-color: lightgreen;"></li>
-                <li style="background-color: khaki;"></li>
+                <li id="1" style="background-color: lightcoral;"></li>
+                <li id="2" style="background-color: skyblue;"></li>
+                <li id="3" style="background-color: lightgoldenrodyellow;"></li>
+                <li id="4" style="background-color: lightslategray;"></li>
+                <li id="5" style="background-color: lightgreen;"></li>
+                <li id="6" style="background-color: khaki;"></li>
             </ul>
         </div>
         <div id="p">
@@ -62,30 +62,30 @@
 <script>
     var color = document.getElementsByTagName("li"); //色块数组
     var p = document.getElementById("p"); //皮肤
-    var a; //用于存储的皮肤颜色的位置
+    var a, b; //用于存储的皮肤颜色和色块
     window.onload = function() { //令皮肤颜色为存储的颜色
         if (!localStorage.getItem("data")) {
             p.style.backgroundColor = color[0].style.backgroundColor;
             color[0].style.marginTop = '5px';
         } else {
             a = localStorage.getItem("data");
-            p.style.backgroundColor = color[a].style.backgroundColor;
+            p.style.backgroundColor = a;
+            b = localStorage.getItem("select");
+            document.getElementById(b).style.marginTop = '5px';
         }
     }
 
     for (var i = 0; i < color.length; i++) {
-        var x = i;
         color[i].onclick = function() {
             p.style.backgroundColor = this.style.backgroundColor; //将皮肤颜色改为点击的颜色
-            localStorage.clear(); //清除存储的颜色位置
-            localStorage.setItem("data", x); //存储点击色块位置
-            this.style.marginTop = '5px'; //点击的色块向上动3px
-            for (var j = 0; x < color.length; j++) {
+            //localStorage.clear(); //清除存储的颜色
+            for (var j = 0; j < color.length; j++) {
                 //其他色块恢复原位置
-                if (j != x) {
-                    color[j].style.marginTop = '8px';
-                }
+                color[j].style.marginTop = '8px';
             }
+            this.style.marginTop = '5px'; //点击的色块向上动3px
+            localStorage.setItem("data", this.style.backgroundColor); //存储点击色块位置
+            localStorage.setItem("select", this.id);
         }
     }
 </script>
