@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        legend {
+            color: red;
+            font-size: x-large;
+            font-weight: bold;
+        }
+        
+        fieldset {
+            width: 450px;
+            padding-left: 15px;
+        }
+        
+        ul {
+            border: solid 1.5px rgb(182, 178, 178);
+            height: 32px;
+            padding: 0px;
+        }
+        
+        li {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-top: 8px;
+            margin-left: 5px;
+            margin-right: 5px;
+            position: relative;
+        }
+        
+        p {
+            font-size: small;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+        <legend>网页换肤</legend>
+        <div id="color">
+            <ul>
+                <li style="background-color: lightcoral;"></li>
+                <li style="background-color: skyblue;"></li>
+                <li style="background-color: lightgoldenrodyellow;"></li>
+                <li style="background-color: lightslategray;"></li>
+                <li style="background-color: lightgreen;"></li>
+                <li style="background-color: khaki;"></li>
+            </ul>
+        </div>
+        <div id="p">
+            <p>
+                LocalStorage将数据保存在客户端本地的硬件设备中，即使浏览器被关闭了，该数据仍然存在，下次打开浏览器访问网站时仍然可以继续使用。
+            </p>
+        </div>
+    </fieldset>
+</body>
+<script>
+    var color = document.getElementsByTagName("li"); //色块数组
+    var p = document.getElementById("p"); //皮肤
+    var a; //用于存储的皮肤颜色的位置
+    window.onload = function() { //令皮肤颜色为存储的颜色
+        if (!localStorage.getItem("data")) {
+            p.style.backgroundColor = color[0].style.backgroundColor;
+            color[0].style.marginTop = '5px';
+        } else {
+            a = localStorage.getItem("data");
+            p.style.backgroundColor = color[a].style.backgroundColor;
+        }
+    }
+
+    for (var i = 0; i < color.length; i++) {
+        var x = i;
+        color[i].onclick = function() {
+            p.style.backgroundColor = this.style.backgroundColor; //将皮肤颜色改为点击的颜色
+            localStorage.clear(); //清除存储的颜色位置
+            localStorage.setItem("data", x); //存储点击色块位置
+            this.style.marginTop = '5px'; //点击的色块向上动3px
+            for (var j = 0; x < color.length; j++) {
+                //其他色块恢复原位置
+                if (j != x) {
+                    color[j].style.marginTop = '8px';
+                }
+            }
+        }
+    }
+</script>
+
+</html>
